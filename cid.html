@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Nepal Safety AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #05070d;
+  color: #00eaff;
+}
+
+/* Sections */
+section {
+  min-height: 100vh;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid rgba(0,234,255,0.2);
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Text */
+h1 {
+  font-size: 42px;
+  margin-bottom: 20px;
+}
+
+p, li {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+ul {
+  margin-top: 20px;
+}
+
+/* Glow */
+.glow {
+  text-shadow: 0 0 8px #00eaff;
+}
+
+/* Card */
+.card {
+  background: rgba(0,0,0,0.6);
+  border: 1px solid #00eaff;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+/* Input */
+input {
+  width: 100%;
+  padding: 12px;
+  background: black;
+  border: 1px solid #00eaff;
+  color: #00eaff;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #00eaff;
+  background: transparent;
+  color: #00eaff;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #00eaff;
+  color: black;
+}
+
+/* Terminal */
+.terminal {
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px solid #00eaff;
+  background: black;
+  min-height: 100px;
+}
+
+/* Progress */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: #00eaff;
+  width: 0%;
+  z-index: 999;
+}
+</style>
+</head>
+
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- Slides -->
+
+<section>
+<div class="container">
+<h1 class="glow">🚨 Nepal Safety AI</h1>
+<p>AI-powered Crime & Cybercrime Reporting</p>
+<p><b>Report. Detect. Protect.</b></p>
+</div>
+</section>
+
+<section>
+<div class="container">
+<h1>🚫 Problem</h1>
+<ul>
+<li>Manual reporting is slow</li>
+<li>People don’t know where to report</li>
+<li>Cybercrime rising</li>
+<li>Emergency delays</li>
+</ul>
+</div>
+</section>
+
+<section>
+<div class="container">
+<h1>💡 Solution</h1>
+<p>Describe your situation → AI handles everything</p>
+</div>
+</section>
+
+<section>
+<div class="container">
+<h1>⚙️ Features</h1>
+<ul>
+<li>💬 AI Chat</li>
+<li>🚨 Panic Button</li>
+<li>📍 GPS</li>
+<li>🧠 Scam Detection</li>
+</ul>
+</div>
+</section>
+
+<section>
+<div class="container">
+<h1>🔄 Workflow</h1>
+<p>User → AI → Police Dashboard</p>
+</div>
+</section>
+
+<section>
+<div class="container">
+<h1>📌 Example</h1>
+<div class="card">
+Someone tried to steal my phone near Ratnapark
+</div>
+<ul>
+<li>Type: Theft</li>
+<li>Severity: Medium</li>
+<li>Location: Kathmandu</li>
+</ul>
+</div>
+</section>
+
+<section>
+<div class="container">
+<h1>🚨 Emergency Mode</h1>
+<ul>
+<li>Instant GPS</li>
+<li>High priority</li>
+<li>Bypass queue</li>
+</ul>
+</div>
+</section>
+
+<section>
+<div class="container">
+<h1>🧠 Cybercrime</h1>
+<p>Detect scams like OTP fraud instantly</p>
+</div>
+</section>
+
+<!-- LIVE DEMO -->
+<section>
+<div class="container">
+<h1 class="glow">⚡ Live Demo</h1>
+
+<input id="input" placeholder="Type incident...">
+
+<button onclick="runDemo()">Analyze</button>
+
+<div class="terminal" id="output">
+> Waiting for input...
+</div>
+</div>
+</section>
+
+<section>
+<div class="container">
+<h1>⚡ Tech Stack</h1>
+<ul>
+<li>React Native (Expo)</li>
+<li>FastAPI</li>
+<li>MongoDB</li>
+</ul>
+</div>
+</section>
+
+<section>
+<div class="container">
+<h1 class="glow">🏁 Vision</h1>
+<p>AI-powered policing for Nepal 🇳🇵</p>
+</div>
+</section>
+
+<script>
+// Progress bar
+window.addEventListener("scroll", () => {
+  let scrollTop = document.documentElement.scrollTop;
+  let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  let progress = (scrollTop / height) * 100;
+  document.getElementById("progress").style.width = progress + "%";
+});
+
+// Demo
+async function runDemo() {
+  let input = document.getElementById("input").value;
+  let output = document.getElementById("output");
+
+  output.innerHTML = "> Processing...";
+
+  try {
+    let res = await fetch("http://localhost:8000/analyze", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({text: input})
+    });
+
+    let data = await res.json();
+
+    output.innerHTML =
+      "> Type: " + data.type + "<br>" +
+      "> Severity: " + data.severity + "<br>" +
+      "> Location: " + data.location;
+
+  } catch {
+    output.innerHTML =
+      "> Type: Theft<br>" +
+      "> Severity: Medium<br>" +
+      "> Location: Kathmandu<br>" +
+      "> Demo mode (no backend)";
+  }
+}
+</script>
+
+</body>
+</html>
